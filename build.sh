@@ -1,2 +1,2 @@
-g++ -pthread main.cpp io.h io.cpp util.h -o main
+g++ -pthread main.cpp io.h io.cpp util.h util.cpp -o main
 ./main

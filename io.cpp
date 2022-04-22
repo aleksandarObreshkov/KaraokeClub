@@ -15,7 +15,8 @@ list<string> get_all_songs() {
     string data_read = "initLoop";
     while(!data_read.empty() && !fileReader.eof()){
         getline(fileReader, data_read);
-        dj_songs.push_back(data_read);
+        string trimmed = trimAndLower(data_read);
+        dj_songs.push_back(trimmed);
     }
 
     fileReader.close();
