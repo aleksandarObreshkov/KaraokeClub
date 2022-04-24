@@ -28,12 +28,16 @@ bool equalStrings(string a, string b){
 }
 
 void saveSongs(list<string> songs){
-    fstream fileWriter;
-    songs.unique(equalStrings);
-    fileWriter.open(DJ_FILE_NAME, ios::app);
-    for (string a : songs)
+    if (songs.size()>0)
     {
-        fileWriter << a << endl;
+        fstream fileWriter;
+        songs.unique(equalStrings);
+        fileWriter.open(DJ_FILE_NAME, ios::app);
+        for (string a : songs)
+        {
+            fileWriter << a << endl;
+        }
     }
+    
 }
 

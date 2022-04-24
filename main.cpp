@@ -7,10 +7,11 @@
 #include <fcntl.h>
 #include <cstdio>
 
-#define SONG_NAME_LENGTH 100
+#define SONG_NAME_LENGTH 50
 
 using namespace std;
 
+const string kill_command = "exit";
 list<string> songsToSave;
 list<string> all_songs;
 
@@ -37,29 +38,32 @@ int main()
 
     pid_t processId = fork();
     if (processId == 0)
-    {
-        string a;
-        for(;;)
+    {   
+        while(true)
         {
+            string a;
             read(p[0], &a, SONG_NAME_LENGTH);
-            if (a != "killProcess")
+            if (a.compare(kill_command)!=0)
             {
                 sing(a);
             }
-            else break;
+            else 
+            {
+                cout << "Stage: " <<"Closing..."<<endl;
+                break;
+            }
         }
-        //close(*p[0]);
-        cout << "Closing the stage" << endl;
     }
 
     else 
-    {
-        for (int i = 0; i < numberOfPeopleToSing; i++)
+    {   
+        for (int i = 0; i < 2; i++)
         {
-            cout << "Which song would you like to sing?" << endl;
+            cout << "DJ: " << "Which song would you like to sing?" << endl;
             string temp;
             getline(cin, temp);
             string choice = trimAndLower(temp);
+
             if (listContains(all_songs, choice))
             {
                 write(p[1], &choice, SONG_NAME_LENGTH);
@@ -67,7 +71,7 @@ int main()
             else
             {
                 saveMissingSong(choice);
-                cout << "We don't have this song right now, would you like to try with another? [y,n]" << endl;
+                cout << "DJ: " << "We don't have this song right now, would you like to try with another? [y,n]" << endl;
                 char anotherSongFlag;
                 cin >> anotherSongFlag;
                 cin.ignore();
@@ -76,16 +80,18 @@ int main()
                     i--;
                     continue;
                 }
-                cout << "Hope to see you soon, bye!" << endl;
+                cout << "DJ: " << "Hope to see you soon, bye!" << endl;
             }
         }
-        write(p[1], "killProcess", SONG_NAME_LENGTH);
+        write(p[1], &kill_command, SONG_NAME_LENGTH);
         saveSongs(songsToSave);
-        //close(p[1]);
-        
+        int status;
+        cout << "DJ: "<<"Waiting for all performers to finish..." << endl;
+        while ((wait(&status)) > 0);
+        close(p[1]);
+        close(p[0]);
     }
-    int status;
-    while ((wait(&status)) > 0);
+    
     return 0;
 }
 
@@ -99,8 +105,8 @@ void saveMissingSong(string song){
 }
 
 void sing(string song){
-    cout << "Now singing: " << song << endl;
+    cout << "Stage: " << "Now singing: " << song << endl;
     sleep(3);
-    cout << "Singer is done!" << endl;
+    cout << "Stage: " << "Singer is done!" << endl;
 }
 

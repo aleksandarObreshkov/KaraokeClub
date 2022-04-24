@@ -6,6 +6,8 @@
         "iosfwd": "cpp",
         "iostream": "cpp",
         "regex": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "fstream": "cpp",
+        "xlocmes": "cpp"
     }
 }
