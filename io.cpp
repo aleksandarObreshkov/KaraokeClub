@@ -3,7 +3,7 @@ using namespace std;
 
 const string DJ_FILE_NAME = "dj.txt";
 
-list<string> get_all_songs() {
+list<string> getAllSongs() {
     fstream fileReader;
     fileReader.open(DJ_FILE_NAME, ios::in);
     if (!fileReader.is_open())
@@ -24,7 +24,7 @@ list<string> get_all_songs() {
 }
 
 bool equalStrings(string a, string b){
-    return a == b;
+    return a.compare(b)==0;
 }
 
 void saveSongs(list<string> songs){

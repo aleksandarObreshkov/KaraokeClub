@@ -24,7 +24,7 @@ void saveMissingSong(string song);
 
 int main()
 {
-    all_songs = get_all_songs();
+    all_songs = getAllSongs();
 
     cout << "Welcome to the Karaoke Club" << endl;
 
@@ -57,7 +57,7 @@ int main()
 
     else 
     {   
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < numberOfPeopleToSing; i++)
         {
             cout << "DJ: " << "Which song would you like to sing?" << endl;
             string temp;
